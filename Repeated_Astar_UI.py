@@ -230,7 +230,7 @@ def printprog(res):
     li.append((res.x,res.y))
     li.reverse()      
     print(li)
-    time.sleep(0.5)
+    time.sleep(0.1)
     for i in li:
       pygame.draw.rect(SCREEN,
                       GREEN,
@@ -281,7 +281,7 @@ def printprog(res):
                           HEIGHT-8])
       
       pygame.display.update()
-      time.sleep(0.8)
+      time.sleep(0.1)
       if(i[0] == tu[0] and i[1] == tu[1]):
         break
       finalPath.append(i)
@@ -353,6 +353,7 @@ for i in finalPath:
                           WIDTH-8,
                           HEIGHT-8])
     pygame.display.update()
+pygame.display.update()
 print(finalPath)
 
 # ##### pygame loop #######
