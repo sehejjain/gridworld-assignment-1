@@ -1,5 +1,6 @@
 import queue
 import pygame
+from binaryHeap import BinaryHeap
 import time
 
 BLACK = (0, 0, 0)
@@ -161,15 +162,16 @@ def findAstar(point):
 
     closed.clear()
     getBlockers(point)
-    q1 = queue.PriorityQueue()
+    q1 = BinaryHeap()
+    # q1 = queue.PriorityQueue()
     hval = calcHval(point)
     cost = hval + gval[(point.x,point.y)]
     #print("cost: ",cost)
-    q1.put((cost, time.time(), point))
+    q1.push((cost, time.time(), point))
 
-    while q1:
+    while q1.size > 0:
         #print("new queue")
-        current = q1.get()[2]
+        current = q1.pop()[2]
         closed[(current.x,current.y)] = True
         if a[current.x][current.y] == 'T' :
             print("target found")
@@ -184,7 +186,7 @@ def findAstar(point):
             cost = hval + gval[(current.x,current.y)]+1
             gval[(current.x+1,current.y)] = gval[(current.x,current.y)]+1
             #print("cost at ",current.x+1,", ",current.y, " : ",cost)
-            q1.put((cost,time.time(), Step(current.x+1, current.y, current)))
+            q1.push((cost,time.time(), Step(current.x+1, current.y, current)))
             seen[(current.x+1,current.y)] = True
 
         if(isClear(current.x-1, current.y)):
@@ -193,7 +195,7 @@ def findAstar(point):
             cost = hval + gval[(current.x,current.y)]+1
             gval[(current.x-1,current.y)] = gval[(current.x,current.y)]+1
             #print("cost at ",current.x-1,", ",current.y, " : ",cost)
-            q1.put((cost,time.time(), Step(current.x-1, current.y, current)))
+            q1.push((cost,time.time(), Step(current.x-1, current.y, current)))
             seen[(current.x-1,current.y)] = True
 
         if(isClear(current.x, current.y+1)):
@@ -202,7 +204,7 @@ def findAstar(point):
             cost = hval + gval[(current.x,current.y)]+1
             gval[(current.x,current.y+1)] = gval[(current.x,current.y)]+1
             #print("cost at ",current.x,", ",current.y+1, " : ",cost)
-            q1.put((cost,time.time(), Step(current.x, current.y+1, current)))
+            q1.push((cost,time.time(), Step(current.x, current.y+1, current)))
             seen[(current.x,current.y+1)] = True
         
         if(isClear(current.x, current.y-1)):
@@ -211,7 +213,7 @@ def findAstar(point):
             cost = hval + gval[(current.x,current.y)]+1
             gval[(current.x,current.y-1)] = gval[(current.x,current.y)]+1
             #print("cost at ",current.x,", ",current.y-1, " : ",cost)
-            q1.put((cost,time.time(), Step(current.x, current.y-1, current)))
+            q1.push((cost,time.time(), Step(current.x, current.y-1, current)))
             seen[(current.x,current.y-1)] = True
     
     return
