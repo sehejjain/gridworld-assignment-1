@@ -190,8 +190,8 @@ def random_maze_generator(r, c, P0, Pf):
 
 # Driver code
 if __name__ == "__main__":
-	N = 15
-	M = 15
+	N = 101
+	M = 101
 	# grid = np.random.binomial(1, 0.2, size=(N,M))
 	# indices =  np.random.randint(0, high=N, size=M)
 	# P0 = indices[0]indices[1]
@@ -199,6 +199,8 @@ if __name__ == "__main__":
 	# P1 = indices1[0]indices1[1]
 
 	# randint(0, len(to_stack)-1)
+ 
+	maze_dict = {}
 	P0 = (0, 0)
 	P1 = (4, 4)
 	maze = random_maze_generator(N, M, P0, P1)
