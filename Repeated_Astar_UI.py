@@ -19,7 +19,7 @@ import time, pickle, copy
 
 # pygame.init()
 # pygame.mixer.init()
-
+time_start = time.time()
 BLACK = (0, 0, 0)
 WHITE = (200, 200, 200)
 GREEN = (0, 255, 0,)
@@ -117,8 +117,9 @@ f = [
 
 #print(a[7][8])
 
-mazes = pickle.load(open("mazes.pkl", "rb"))
+# mazes = pickle.load(open("mazes.pkl", "rb"))
 # mazes = [pickle.load(open("maze_test.pkl", "rb"))]
+mazes = [pickle.load(open("maze_test_60.pkl", "rb"))]
 a, start, end = mazes[MAZE_NUMBER][0], mazes[MAZE_NUMBER][1], mazes[MAZE_NUMBER][2]
 
 f = copy.deepcopy(a)
@@ -394,3 +395,5 @@ while running:
             running = False
             pygame.quit()
 
+
+print("time taken: ",time.time()-start_time)
