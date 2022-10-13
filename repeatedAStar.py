@@ -297,7 +297,7 @@ known = [[manhattanDistance((j, i), goal) for i in range(len(a[0]))] for j in ra
 # known
 
 # %%
-start, goal
+# start, goal
 
 # %%
 # # Test A star
@@ -308,42 +308,5 @@ start, goal
 # %%
 x = RepeatedAstar(a, start, goal)
 x.runAstar()
-
-# %%
-x.path
-
-# %%
-x.path
-
-# %%
-neighbours = [(5, 8), (6, 9), (6, 7), (7, 8)]
-
-# %%
-for i in range(len(neighbours)):
-    print(x.known[neighbours[i][0]][neighbours[i][1]])
-
-# %%
-# for i in a:
-#     for j in i:
-#         print(j, end="")
-#     print("")
-
-# %%
-x.grid[72][63]
-
-# %%
-for i in x.grid:
-    for j in i:
-        print(j, end="")
-    print("")
-
-# %%
-x.grid[72][63]
-
-# %%
-pygame.quit()
-
-# %%
-
 
 
