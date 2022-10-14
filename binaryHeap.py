@@ -5,7 +5,7 @@ class BinaryHeap:
         self.heap = [0]
         # self.heap[0] = -1 * math.inf
         
-    def push(self, k):
+    def put(self, k):
         self.heap.append(k)
         self.size += 1
         self.percUp(self.size)
@@ -34,7 +34,7 @@ class BinaryHeap:
             # print(i)
             parent_index = i//2
             # print(self.heap, self.heap[parent_index], self.heap[i])
-            if self.heap[i][0] < self.heap[parent_index][0] or (self.heap[i][0] == self.heap[parent_index][0] and self.heap[i][1] < self.heap[parent_index][1]):
+            if self.heap[i][0] < self.heap[parent_index][0]:
                 self.heap[i], self.heap[parent_index] = self.heap[parent_index], self.heap[i]
                 
             i = parent_index
@@ -42,9 +42,9 @@ class BinaryHeap:
     def percDown(self, i):
         while (i * 2) <= self.size:
             child = i*2
-            if child + 1 <= self.size and self.heap[child + 1] < self.heap[child]:
+            if child + 1 <= self.size and self.heap[child + 1][0] < self.heap[child][0]:
                 child = 2*i + 1
-            if self.heap[i][0] > self.heap[child][0] or (self.heap[i][0] == self.heap[child][0] and self.heap[i][1] > self.heap[child][1]):
+            if self.heap[i][0] > self.heap[child][0]:
                 self.heap[i], self.heap[child] = self.heap[child], self.heap[i]
             i = child
             
