@@ -32,9 +32,9 @@ class BinaryHeap:
         self.percUp(self.size)
         
     def remove(self, i):
-        for item in self.heap:
-            if i == item:
-                self.heap.remove(i)
+        for index in range(1, self.size):
+            if i == self.heap[index]:
+                self.heap.pop(index)
                 self.size -= 1
                 self.percDown(1)
                 
