@@ -31,12 +31,13 @@ WINDOW_WIDTH = 850
 
 WIDTH = 3.3
 HEIGHT = WIDTH
-MARGIN = 5
+MARGIN = 2
 FPS = 30
-
+start_time = time.time()
 pygame.init()
 pygame.mixer.init()
 
+#workin for: 8, 0, 2 , 4(with tweek)
 # Change maze here
 MAZE_NUMBER = 0
 
@@ -124,6 +125,8 @@ a, start, end = mazes[MAZE_NUMBER][0], mazes[MAZE_NUMBER][1], mazes[MAZE_NUMBER]
 
 f = copy.deepcopy(a)
 
+#print(a)
+
 block = {}
 closed = {}
 hval = {}
@@ -138,14 +141,14 @@ for i in a:
 
 
 def isClear(x, y):
-    #print("here at : ",x,y)
+    print("here at : ",x,y)
     if ((y >= 0 and y < len(a[0])) and (x >= 0 and x < len(a))):
         #print("in if here")
         #print(block)
-        if ( (not block.get((x,y))) and not closed.get((x,y))) :
-            #print("in if if here")
+        if ( (not block.get((x,y))) ): #and not closed.get((x,y)) ) :
+            print("true")
             return True
-    #print("false")
+    print("false")
     return False
 
 def getBlockers(it):
@@ -192,7 +195,7 @@ def findAstar(point):
     # q1 = queue.PriorityQueue()
     hval = calcHval(point)
     cost = hval + gval[(point.x,point.y)]
-    #print("cost: ",cost)
+    print("cost: ",cost)
     q1.put((cost, point))
 
     while q1.size > 0:
@@ -204,44 +207,49 @@ def findAstar(point):
             print("target found")
             return current
         
+        #print(closed)
         #a[current.x][current.y] = 'R'
-        #print("cord: ",current.x, " ", current.y)
+        print("cord: ",current.x, " ", current.y)
         if(isClear(current.x+1, current.y)):
             s1 = Step(current.x+1, current.y, current)
             hval = calcHval(s1)
             #print(hval)
             cost = hval + gval[(current.x,current.y)]+1
             gval[(current.x+1,current.y)] = gval[(current.x,current.y)]+1
-            #print("cost at ",current.x+1,", ",current.y, " : ",cost)
-            q1.put((cost, Step(current.x+1, current.y, current)))
-            seen[(current.x+1,current.y)] = True
+            print("cost at ",current.x+1,", ",current.y, " : ",cost)
+            if((current.x+1, current.y) not in closed):
+                q1.put((cost, Step(current.x+1, current.y, current)))
+                seen[(current.x+1,current.y)] = True
 
         if(isClear(current.x-1, current.y)):
             s1 = Step(current.x-1, current.y, current)
             hval = calcHval(s1)
             cost = hval + gval[(current.x,current.y)]+1
             gval[(current.x-1,current.y)] = gval[(current.x,current.y)]+1
-            #print("cost at ",current.x-1,", ",current.y, " : ",cost)
-            q1.put((cost, Step(current.x-1, current.y, current)))
-            seen[(current.x-1,current.y)] = True
+            print("cost at ",current.x-1,", ",current.y, " : ",cost)
+            if((current.x-1, current.y) not in closed):
+                q1.put((cost, Step(current.x-1, current.y, current)))
+                seen[(current.x-1,current.y)] = True
 
         if(isClear(current.x, current.y+1)):
             s1 = Step(current.x, current.y+1, current)
             hval = calcHval(s1)
             cost = hval + gval[(current.x,current.y)]+1
             gval[(current.x,current.y+1)] = gval[(current.x,current.y)]+1
-            #print("cost at ",current.x,", ",current.y+1, " : ",cost)
-            q1.put((cost, Step(current.x, current.y+1, current)))
-            seen[(current.x,current.y+1)] = True
+            print("cost at ",current.x,", ",current.y+1, " : ",cost)
+            if((current.x, current.y+1) not in closed):
+                q1.put((cost, Step(current.x, current.y+1, current)))
+                seen[(current.x,current.y+1)] = True
         
         if(isClear(current.x, current.y-1)):
             s1 = Step(current.x, current.y-1, current)
             hval = calcHval(s1)
             cost = hval + gval[(current.x,current.y)]+1
             gval[(current.x,current.y-1)] = gval[(current.x,current.y)]+1
-            #print("cost at ",current.x,", ",current.y-1, " : ",cost)
-            q1.put((cost, Step(current.x, current.y-1, current)))
-            seen[(current.x,current.y-1)] = True
+            print("cost at ",current.x,", ",current.y-1, " : ",cost)
+            if((current.x, current.y-1) not in closed):
+                q1.put((cost, Step(current.x, current.y-1, current)))
+                seen[(current.x,current.y-1)] = True
     
     return
 
@@ -361,6 +369,8 @@ new = start
 while(out != end):
     drawGrid()
     pygame.display.update()
+    gval.clear()
+    closed.clear()
     print("here")
     it = Step(new[0],new[1], None)
     gval[(it.x,it.y)] = 0
@@ -375,13 +385,14 @@ finalPath.append(out)
 for i in finalPath:
     pygame.draw.rect(SCREEN,
                           GREEN,
-                          [(MARGIN + WIDTH) * i[1] + MARGIN + 3,
-                          (MARGIN + HEIGHT) * i[0] + MARGIN + 3,
+                          [(MARGIN + WIDTH) * i[1] + MARGIN+3,
+                          (MARGIN + HEIGHT) * i[0] + MARGIN+3,
                           WIDTH-8,
                           HEIGHT-8])
     pygame.display.update()
 pygame.display.update()
 print(finalPath)
+print("finally done!")
 
 # ##### pygame loop #######
 running = True
