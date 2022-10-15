@@ -29,7 +29,7 @@ YELLOW = (255 ,255 ,0)
 WINDOW_HEIGHT = 850
 WINDOW_WIDTH = 850
 
-WIDTH = 3.3
+WIDTH = 6
 HEIGHT = WIDTH
 MARGIN = 2
 FPS = 30
@@ -39,7 +39,7 @@ pygame.mixer.init()
 
 #workin for: 8, 0, 2 , 4(with tweek)
 # Change maze here
-MAZE_NUMBER = 0
+MAZE_NUMBER = 6
 
 class Step:
 
@@ -118,7 +118,7 @@ f = [
 
 #print(a[7][8])
 
-mazes = pickle.load(open("mazes.pkl", "rb"))
+mazes = pickle.load(open("mazes_new.pkl", "rb"))
 # mazes = [pickle.load(open("maze_test.pkl", "rb"))]
 # mazes = [pickle.load(open("maze_test.pkl", "rb"))]
 a, start, end = mazes[MAZE_NUMBER][0], mazes[MAZE_NUMBER][1], mazes[MAZE_NUMBER][2]
@@ -251,7 +251,7 @@ def findAstar(point):
                 q1.put((cost, gval[(current.x, current.y-1)], Step(current.x, current.y-1, current)))
                 seen[(current.x,current.y-1)] = True
     
-    return
+    return False
 
 def printprog(res):
     li = []
@@ -375,6 +375,9 @@ while(out != end):
     it = Step(new[0],new[1], None)
     gval[(it.x,it.y)] = 0
     res = findAstar(it)
+    if res == False:
+        print("No path found")
+        break
     new  = printprog(res)
     print(new)
     out = new
@@ -394,6 +397,8 @@ pygame.display.update()
 print(finalPath)
 print("finally done!")
 
+print("time taken: ",time.time()-start_time)
+
 # ##### pygame loop #######
 running = True
 while running:
@@ -407,4 +412,3 @@ while running:
             pygame.quit()
 
 
-print("time taken: ",time.time()-start_time)
