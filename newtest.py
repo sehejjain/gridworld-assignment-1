@@ -196,12 +196,12 @@ def findAstar(point):
     hval = calcHval(point)
     cost = hval + gval[(point.x,point.y)]
     print("cost: ",cost)
-    q1.put((cost, point))
+    q1.put((cost, gval[(point.x,point.y)], point))
 
     while q1.size > 0:
         # print("A star iteration start")
         #print("new queue")
-        current = q1.pop()[1]
+        current = q1.pop()[2]
         closed[(current.x,current.y)] = True
         if a[current.x][current.y] == 'T' :
             print("target found")
@@ -218,7 +218,7 @@ def findAstar(point):
             gval[(current.x+1,current.y)] = gval[(current.x,current.y)]+1
             print("cost at ",current.x+1,", ",current.y, " : ",cost)
             if((current.x+1, current.y) not in closed):
-                q1.put((cost, Step(current.x+1, current.y, current)))
+                q1.put((cost, gval[(current.x+1,current.y)], Step(current.x+1, current.y, current)))
                 seen[(current.x+1,current.y)] = True
 
         if(isClear(current.x-1, current.y)):
@@ -228,7 +228,7 @@ def findAstar(point):
             gval[(current.x-1,current.y)] = gval[(current.x,current.y)]+1
             print("cost at ",current.x-1,", ",current.y, " : ",cost)
             if((current.x-1, current.y) not in closed):
-                q1.put((cost, Step(current.x-1, current.y, current)))
+                q1.put((cost, gval[(current.x-1, current.y)], Step(current.x-1, current.y, current)))
                 seen[(current.x-1,current.y)] = True
 
         if(isClear(current.x, current.y+1)):
@@ -238,7 +238,7 @@ def findAstar(point):
             gval[(current.x,current.y+1)] = gval[(current.x,current.y)]+1
             print("cost at ",current.x,", ",current.y+1, " : ",cost)
             if((current.x, current.y+1) not in closed):
-                q1.put((cost, Step(current.x, current.y+1, current)))
+                q1.put((cost, gval[(current.x, current.y+1)], Step(current.x, current.y+1, current)))
                 seen[(current.x,current.y+1)] = True
         
         if(isClear(current.x, current.y-1)):
@@ -248,7 +248,7 @@ def findAstar(point):
             gval[(current.x,current.y-1)] = gval[(current.x,current.y)]+1
             print("cost at ",current.x,", ",current.y-1, " : ",cost)
             if((current.x, current.y-1) not in closed):
-                q1.put((cost, Step(current.x, current.y-1, current)))
+                q1.put((cost, gval[(current.x, current.y-1)], Step(current.x, current.y-1, current)))
                 seen[(current.x,current.y-1)] = True
     
     return
